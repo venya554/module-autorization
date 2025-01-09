@@ -45,12 +45,19 @@ private:
                 throw std::runtime_error("Ошибка при получении токена доступа: " + std::to_string(response.status_code()));
             }).then([](const utility::string_t& response_string) {
                 // Обработка ответа
-                std::cout << "Ответ от сервера: " << response_string << std::endl;
+                std::wcout << L"Ответ от сервера: " << response_string << std::endl;
 
-                // Извлечение токена доступа из ответа
+                // Парсинг JSON-ответа
                 auto json_response = web::json::value::parse(response_string);
-                std::string access_token = json_response[U("access_token")].as_string();
-                std::cout << "Получен токен доступа: " << access_token << std::endl;
+
+                // Проверка наличия ключа "access_token"
+                if (json_response.has_field(U("access_token"))) {
+                    // Получение токена доступа
+                    std::string access_token = utility::conversions::to_utf8string(json_response[U("access_token")].as_string());
+                    std::cout << "Получен токен доступа: " << access_token << std::endl;
+                } else {
+                    std::cerr << "Ключ 'access_token' отсутствует в ответе." << std::endl;
+                }
             }).wait();
         } catch (const std::exception& e) {
             std::cerr << "Ошибка: " << e.what() << std::endl;
@@ -59,8 +66,8 @@ private:
 };
 
 int main() {
-    std::string client_id = "YOUR_CLIENT_ID"; // Замените на ваш Client ID
-    std::string client_secret = "YOUR_CLIENT_SECRET"; // Замените на ваш Client Secret
+    std::string client_id = "Ov23lipM6scFzPXEutdA"; // Замените на ваш Client ID
+    std::string client_secret = "78c48c3395c0b7446b3a720d225703db397b2ae1"; // Замените на ваш Client Secret
 
     YandexOAuth yandex(client_id, client_secret);
     yandex.authorize();

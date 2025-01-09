@@ -5,6 +5,7 @@
 #include <bsoncxx/json.hpp>
 #include <iostream>
 #include <string>
+#include <optional> // Добавлено для использования std::optional
 
 class MongoDB {
 public:
@@ -35,16 +36,16 @@ public:
     }
 
     // Получение пользователя
-    bsoncxx::document::value getUser(const std::string& username) {
+    std::optional<bsoncxx::document::value> getUser(const std::string& username) {
         try {
             auto collection = database["users"];
             bsoncxx::builder::stream::document filter{};
             filter << "username" << username;
             auto result = collection.find_one(filter.view());
-            return result ? *result : bsoncxx::document::value{};
+            return result ? std::optional(*result) : std::nullopt;
         } catch (const std::exception& e) {
             std::cerr << "Ошибка при получении пользователя: " << e.what() << std::endl;
-            return bsoncxx::document::value{};
+            return std::nullopt;
         }
     }
 
@@ -81,8 +82,8 @@ int main() {
 
         // Получение пользователя
         auto user = db.getUser("testuser");
-        if (!user.is_empty()) {
-            std::cout << "User found: " << bsoncxx::to_json(user) << std::endl;
+        if (user) {
+            std::cout << "User found: " << bsoncxx::to_json(*user) << std::endl;
         } else {
             std::cout << "User not found." << std::endl;
         }

@@ -1,0 +1,6 @@
+D:/DeskTop/1/build/CMakeFiles/bcrypt.dir
+D:/DeskTop/1/build/CMakeFiles/bcrypt_test.dir
+D:/DeskTop/1/build/CMakeFiles/PACKAGE.dir
+D:/DeskTop/1/build/CMakeFiles/INSTALL.dir
+D:/DeskTop/1/build/CMakeFiles/ALL_BUILD.dir
+D:/DeskTop/1/build/CMakeFiles/ZERO_CHECK.dir

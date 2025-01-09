@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            font-family: Arial, sans-serif;
+        }
+        .login-container {
+            background: white;
+            padding: 20px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .login-container h2 {
+            margin-bottom: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+        .login-buttons {
+            display: flex;
+            justify-content: space-around;
+        }
+        .login-buttons button {
+            background: none;
+            border: 1px solid #ccc;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+        }
+        .login-buttons button img {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Вы не авторизованы. Пожалуйста, войдите в систему используя один из ниже перечисленных способов:</h2>
+        <div class="login-buttons">
+            <button id="github-btn">
+                <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub" width="20">
+                GitHub
+            </button>
+            <button id="yandex-btn">
+                <img src="https://yastatic.net/s3/home/logos/share/share-logo-ru.png" alt="Yandex ID" width="20">
+                Яндекс ID
+            </button>
+            <button id="code-btn">
+                CODE
+            </button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('github-btn').addEventListener('click', () => {
+            fetch('http://localhost:8080', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ action: 'github_auth' })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                alert(data.message);
+            })
+            .catch(error => console.error('Ошибка:', error));
+        });
+
+        document.getElementById('yandex-btn').addEventListener('click', () => {
+            fetch('http://localhost:8080', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ action: 'yandex_auth' })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                alert(data.message);
+            })
+            .catch(error => console.error('Ошибка:', error));
+        });
+
+        document.getElementById('code-btn').addEventListener('click', () => {
+            const code = prompt("Введите код подтверждения:");
+            if (code) {
+                fetch('http://localhost:8080', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ action: 'verify_code', code: code })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    alert(data.message);
+                })
+                .catch(error => console.error('Ошибка:', error));
+            }
+        });
+    </script>
+</body>
+</html>

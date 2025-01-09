@@ -43,14 +43,14 @@ private:
             throw std::runtime_error("Ошибка при получении токена доступа: " + std::to_string(response.status_code()));
         }).then([](const utility::string_t& response_string) {
             // Обработка ответа
-            std::cout << "Ответ от сервера: " << response_string << std::endl;
+            std::wcout << L"Ответ от сервера: " << response_string << std::endl;
         }).wait();
     }
 };
 
 int main() {
-    std::string client_id = "YOUR_CLIENT_ID"; // Замените на ваш Client ID
-    std::string client_secret = "YOUR_CLIENT_SECRET"; // Замените на ваш Client Secret
+    std::string client_id = "Ov23lipM6scFzPXEutdA"; // Замените на ваш Client ID
+    std::string client_secret = "Y78c48c3395c0b7446b3a720d225703db397b2ae1"; // Замените на ваш Client Secret
 
     GitHubOAuth github(client_id, client_secret);
     github.authorize();

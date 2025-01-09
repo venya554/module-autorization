@@ -1,15 +1,7 @@
 {
   "ExpandedNodes": [
     "",
-    "\\au",
-    "\\build\\.cmake",
-    "\\build\\.cmake\\api",
-    "\\build\\.cmake\\api\\v1",
-    "\\build\\.cmake\\api\\v1\\query",
-    "\\build\\.cmake\\api\\v1\\query\\client-vscode",
-    "\\libbcrypt\\vs2017",
-    "\\libbcrypt\\vs2017\\libbcrypt"
+    "\\au"
   ],
-  "SelectedNode": "\\au\\passw.cpp",
   "PreviewInSolutionExplorer": false
 }
